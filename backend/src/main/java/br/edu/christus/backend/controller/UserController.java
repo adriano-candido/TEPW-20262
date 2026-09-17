@@ -1,0 +1,32 @@
+package br.edu.christus.backend.controller;
+
+import br.edu.christus.backend.domain.User;
+import br.edu.christus.backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserController {
+
+    @Autowired
+    private UserService service;
+
+    @PostMapping
+    public User create(@RequestBody User user){
+        return service.create(user);
+    }
+
+    @GetMapping
+    public List<User> findAll(){
+        return service.findUsers();
+    }
+
+
+
+
+
+
+}
