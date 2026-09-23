@@ -16,8 +16,18 @@ public class UserService {
     public User create(User entity){
         return repository.save(entity);
     }
+
+
     public List<User> findUsers(){
         return repository.findAll();
     }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+    
+
+
+
 
 }
