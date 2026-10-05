@@ -19,11 +19,20 @@ public class UserController {
         return service.create(user);
     }
 
+    @PutMapping
+    public User update(@RequestBody User user){
+        return service.update(user);
+    }
+
     @GetMapping
     public List<User> findAll(){
         return service.findUsers();
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id){
+        service.delete(id);
+    }
 
 
 

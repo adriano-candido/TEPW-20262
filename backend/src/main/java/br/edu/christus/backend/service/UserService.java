@@ -17,6 +17,12 @@ public class UserService {
         return repository.save(entity);
     }
 
+    public User update(User entity){
+        if(entity.getId() == null){
+            return null;
+        }
+        return repository.save(entity);
+    }
 
     public List<User> findUsers(){
         return repository.findAll();
@@ -25,7 +31,7 @@ public class UserService {
     public void delete(Long id){
         repository.deleteById(id);
     }
-    
+
 
 
 

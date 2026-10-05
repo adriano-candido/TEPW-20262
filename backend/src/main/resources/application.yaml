@@ -2,4 +2,4 @@ spring:
   application:
     name: backend
   profiles:
-    active: h2
+    active: psql
