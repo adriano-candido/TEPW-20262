@@ -6,7 +6,10 @@ import br.edu.christus.backend.domain.model.User;
 import br.edu.christus.backend.repository.UserRepository;
 import br.edu.christus.backend.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,23 +19,23 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    // Recebe UserDTO e devolve UserLowDTO.
     public UserLowDTO create(UserDTO dto){
-        //Converte dto em Entity
-        var entity = MapperUtil.parseObject(dto, User.class);
-        //Salva a entidade e retorna ela com ID
-        var entitySaved = repository.save(entity);
-        // Converte a entidade salva em UserLowDTO
-        var dtoResponse = MapperUtil.parseObject(entitySaved, UserLowDTO.class);
-        //Retorna o DTO convertido
-        return dtoResponse;
-    }
+        if(dto.getName().length() > 100){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "O limite de caracteres do nome é 100");
+        }
 
-    public UserLowDTO createV2(UserDTO dto){
+        if(repository.existsByEmail(dto.getEmail())){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "O e-mail já está registrado !");
+        }
+
+
         var entity = MapperUtil.parseObject(dto, User.class);
         return MapperUtil.parseObject(
                 repository.save(entity), UserLowDTO.class);
     }
+
 
     public User update(User entity){
         if(entity.getId() == null){

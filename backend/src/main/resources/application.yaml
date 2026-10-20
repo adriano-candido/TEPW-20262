@@ -3,3 +3,6 @@ spring:
     name: backend
   profiles:
     active: psql
+  web:
+    error:
+      include-message: always
